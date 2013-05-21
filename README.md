@@ -4,18 +4,19 @@ Fouriertransformingstacksinproduction
 Fourier transform programs pre-publishing
 
 Basic summary
-
+=============
 This series of programs produces a series of heat maps showing the frequency of ocillation of the intensities of 
 individual pixels in a stack of .tiff images.
 
-========================================================================================================================
-Twitter version
 
+Twitter version
+===============
 Codes to do Fourier transforms of .tiff image stacks to find the frequency of oscillation in magnetisation from PEEM 
 data #twitterphysics
-=====================================================================================================================
-User guide
 
+
+User guide
+===========
 The finer details of the UI may vary as the code was developed but here is a general guide for using early iterations 
 of the code:-
 1. Select the directory in matlab where your .tiff files are stored
@@ -39,8 +40,8 @@ and like the fourer transformation section will save the results as a series of 
 your results if the DRM has a hissy fit.
 
 
-=====================================================================================================================
 Code structure
+==============
 
 The code starts by asking the user for the number of images to be transformed, the suffix of those images (assuming 
 diamond naming convention) and the name of the .txt file containing the timestamps on all the individual images.
@@ -59,22 +60,14 @@ The program now asks the user whether they want to find a specific set of points
 frequencies finding a number of images (again defined by the user) covering the defined range so that each image's
 range stops just short of the next image's range, or to find a specific set of frequencies using a range defined by
 the user. The program then sums the values of the fourier transformation between each point in order to produce a 2D 
-matrix representing a heat map of the defined frequency range across the image (see figure 1)
-
-Fig 1.
-                                        frequency-range          frequency+range
-      Fourier transformed data=>1843529481763924|761923847619237846193456|2784619732846913287
-                                                             |
-                                                            sum
-                                                             |
-                                                             V
-                                 Value for that particular pixel in this particular heat map
-   
+matrix representing a heat map of the defined frequency range across the image.
    
 These 2D matracies are then saved as .txt files in case the code crashes in the middle of producing figures and the 
 heat maps are output as figures.
 
-=======================================================================================================================
+
+File list
+=========
 This repository contains a number of files with different purposes, for this reason here is a list to help you use the
 files effectively (Listed by date of upload):-
 
