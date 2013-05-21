@@ -7,6 +7,12 @@ Basic summary
 
 This series of programs produces a series of heat maps showing the frequency of ocillation of the intensities of 
 individual pixels in a stack of .tiff images.
+
+========================================================================================================================
+Twitter version
+
+Codes to do Fourier transforms of .tiff image stacks to find the frequency of oscillation in magnetisation from PEEM 
+data #twitterphysics
 =====================================================================================================================
 User guide
 
@@ -73,11 +79,17 @@ This repository contains a number of files with different purposes, for this rea
 files effectively (Listed by date of upload):-
 
 Readme.md => That's this file fool
+
 Frequencyfinderrunner.m => The vanilla version of the program, reads raw data and the UI is a total mess
 got_to.txt => An example of a got_to file, a bookkeeping device for the code
+
 testimestampsb.txt => An example of a set of timestamps, can be used with the testpieces produced by the testpiece
 producing file included here
+
 normalizationprogram.m => Normalises a stack of .tiff images so that their values run between 1 and -1
+
 frequencyfinderfornormalizeddata.m => Performes the fourier analysis on data normalized by normalisationprogram.m
+
 teststackdfrequencydevice.m => Produces a set of .tif images which you can use to test the fourier transformation 
 programs
+
