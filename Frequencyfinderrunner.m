@@ -134,6 +134,8 @@ dlmwrite('got_to.txt',[0 length(imagestack)])
 %of various frequencies of osscilation
 
 clear imagestack%clearing up some memory space
+clear startx
+startx=load('got_to.txt');
 
 freqstacksize=[startx(2) startx(2) n];
 
