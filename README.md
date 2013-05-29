@@ -86,3 +86,6 @@ frequencyfinderfornormalizeddata.m => Performes the fourier analysis on data nor
 teststackdfrequencydevice.m => Produces a set of .tif images which you can use to test the fourier transformation 
 programs
 
+programforaccesingtheproducedheatmapsforwhenmatlabDRMfucksus => Uses the .txt files produced by the fourier
+transformation programs to reproduce the heat maps if something happens to matlab after it produces all the relevant 
+figures
