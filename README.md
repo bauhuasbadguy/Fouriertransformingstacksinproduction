@@ -24,28 +24,41 @@ This is a user guide for the MK2 user interface when transforming .mat files pro
 1. Use a program like the batch rename converter to rename the .omf files numberically so that the new names are 0.omf,
   1.omf,2.omf ect. When doing this make sure they are in a folder you can easely identify because all the different data
   sets will look the same after this
+
 2. Use Duncan's batch converter to turn these files into .mat files. You can also use the toolbox OOMMFTools but that'll
   take ages so use the file found in the OOMMFtools repository.
+
 3. First edit the values in the code creatingaconfigfile.m to match the parameters in your code, the parameters are 
    listed below.
+
     a.In the .mat version filestyle will set the prefix on the output files, don't change this after you've run the code 
     once or errors will ensue
+
     b.timestamp is the time between images, for the moment it can only do equally spaced images but I intend to fix that
     in the future
+
     c.startfile is the first file in the sequence which you want to fourier transform. For the moment it is assumed that
     the naming nomenclature described in step one was used with 0.omf.mat being the first image. This variable is used
     for sequences that don't start in a stable state.
+
     d.lastfile is the total number of files it is equal to the name of the last file +1
+
     e.n is the size of the fourier transformation, the bigger n is the more detailed the result and the longer the code
     takes to run
+
     f.startfreq defines the lower bound of the frequencies of the heat maps to be found
     g.endfreq defines the final frequency in the run
+    
     h.nofreqstofind sets the number of images to produce between the starting frequency and the final frequency
+    
     i.mdir sets the magnetisation direction your looking at you can choose 'x','y' or 'z'. If you don't enter a valid 
     selection 'x' will be chosen for now
+
     j.root is the root of the .mat files to be converted, your getting a look inside my computer with the standard one
     WOOOOOOOOO
+
     k.The rest of the lines should'nt be edited, they save the configuration file and create the marker file
+    
 4. Run fourier transformformatfiles.m everything should go smoothly. If something interupts the fourier transformation
   stage it has been set up so that it reads got_to.txt (one of the files that was created when you ran 
   creatingconfigfile.m) and uses that to know how far it got through the fourier transformation. At the end of the 
