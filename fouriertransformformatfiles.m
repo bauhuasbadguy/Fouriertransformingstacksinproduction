@@ -18,10 +18,10 @@ clear all
 %%
 
 %Image loading section
-
 q1 = 0;
 tic
 config=load('configuration.mat');
+imagenum=lastfile-startfile+1;
 if strcmp(config.mdir,'z') == 1
     datadir=3;
 elseif strcmp(config.mdir,'y') == 1
@@ -47,7 +47,7 @@ for x1=1:sizefinder(1)
     end
 end
 %subtract that mean from each image in the stack
-for z1=1:config.imagenum
+for z1=1:imagenum
     imagestack(:,:,z1)=imagestack(:,:,z1)-meanmatrix;
 end
 
@@ -201,7 +201,7 @@ colourbarmaxvalue=max(max(max(finalimage)));
 for n12=1:length(freques)
     freqtofind=freques(n12);
     
-    dlmwrite([filestyle,'frequency',num2str(freqtofind.*(10.^-6)),'MHz+or-',num2str(rangetouse.*(10.^-6)),'MHz.txt'],finalimage(:,:,n12))
+    dlmwrite([config.filestyle,'frequency',num2str(freqtofind.*(10.^-6)),'MHz+or-',num2str(rangetouse.*(10.^-6)),'MHz.txt'],finalimage(:,:,n12))
     figure
     imagesc(finalimage(:,:,n12))
     title(['Frequency ',num2str(freqtofind.*(10.^-6)),'MHz Range +/-',num2str(rangetouse.*(10.^-6)),'MHz Maximum frequency intensity=',num2str(max(max(finalimage(:,:,n12))))])
