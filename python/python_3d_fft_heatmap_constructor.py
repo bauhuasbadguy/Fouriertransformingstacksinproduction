@@ -1,10 +1,6 @@
 #fft heatmap constructor
 
 
-import sys
-sys.path.append('C:/Python27/Lib/site-packages')
-sys.path.append('C:\Python27\Lib\site-packages\heatmap')
-#sys.path.remove('V:\\Brian.140\\Python.2.7.3\\lib\\site-packages')
 import numpy as np
 import os
 import PIL
@@ -13,26 +9,24 @@ import scipy.io
 import matplotlib
 import matplotlib.pyplot as plt
 import glob
-import glob
 import math
 
 def load_ffted_data(target_dir, filename):
 
-    f = open(target_dir + filename, 'r')
+    #read in a file
+    with open(target_dir + filename, 'r') as f
 
+        readstring = f.read()
 
-    readstring = f.read()
-
-
+    #split the string by newlines
     readstring = readstring.split('\n')
 
+    #remove empty lines from the dataset
     readstring.remove('')
 
 
     result = []
-
     for i in range(len(readstring)):
-
 
         rawstring = readstring[i].split(', ')
 
@@ -53,9 +47,6 @@ def load_ffted_data(target_dir, filename):
 ### End of function definitions ###
 ###################################
 
-
-
-
 timestep = 100e-12
 #0.025e-9
 
@@ -69,16 +60,6 @@ n = 512
 #dev pre-fft reading function
 
 target_dir = 'F:/Python_programs/processing_XMCD_data/December_2014_video_1_analysis/stack_fft_result/'
-#'G:/HPCcalculations/500nmsquare_realistic_damping/0KJ/amplitude10/bmp/python_3D_fft_on_x/'
-#'E:/HPCcalculations/2000nmextension/0KJ/amplitude10/bmp/python_3D_fft_on_x/'
-#'H:/HPCcalculations/1500nmsquare/0KJ/amplitude10/bmp/python_3D_fft_on_x/'
-#'G:/HPCcalculations/500nmsquare/40KJ/amplitude10/bmp/python_3D_fft_on_x/'
-#'G:/HPCcalculations/500nmsquarenouniax/0KJ/amplitude10/bmp/python_3D_fft_on_x/'
-#target_dir = 'G:/HPCcalculations/500nmsquarenouniax/0KJ/amplitude10/bmp/python_3D_fft_on_x/'
-#target_dir = "F:/Python_programs/fft_programs/stackfftprograms/test_piece_python_fft/"
-#'G:/HPCcalculations/500nmsquare/0KJ/amplitude10/bmp/python_3D_fft_on_x/'
-#"F:/Python_programs/fft_programs/stackfftprograms/test_piece_python_fft/"
-#'G:/HPCcalculations/500nmsquare/0KJ/amplitude10/bmp/python_3D_fft_on_x/'
 
 os.chdir(target_dir)
 
@@ -97,25 +78,6 @@ for i in range(n/2):
 
 #Set the frequencies you want to centre on
 desired_freqs = [80e6, 160e6, 320e6]
-#[3e8, 5e9, 6.5e9, 12.3e9]
-#no uniaxial anisotropy
-#[8.493e9, 1.03453e10, 1.07765e10, 1.12458e10, 1.19433e10, 1.21842e10]
-#amp 10 500nm square
-#desired_freqs = [2, 5, 11, 23]
-
-#500nm square amp 10 frequencies
-#[3e8, 5e9, 6.5e9, 1.122e10, 1.22e10]
-#testpiece frequencies
-#[2, 5, 11, 23]
-#[3e8, 5.05e9, 6.53e9, 1.1224e10, 1.19867e10, 1.2236e10]
-#[3e8, 8.42e9, 9.36703e9, 1.06145e10, 1.1236e10, 1.22578e10, 1.42148e10]
-#[8.241e9]
-#[1.8e9, 3.05e9, 8.27e9]
-#[2.67e9, 4.13e9, 9.313e9]
-#[2e8, 2.67e9, 4.13e9]
-
-#desired_freqs = [2e8, 1.36e9, 2.49e9, 7.79e9]
-#[7.5e9, 1.27e10]
 
 window = 1e7
 
@@ -140,7 +102,7 @@ for y, filename in enumerate(filenames):
 
 
     if y%100 == 0:
-        print y
+        print(y)
 
     result = load_ffted_data(target_dir, filename)
 
@@ -164,10 +126,7 @@ for y, filename in enumerate(filenames):
 
             heatmaps[freq_no][y].append(this_pixel)
 
-
-
-
-print "Plotting"
+print("Plotting")
 heatmap_images = []
 
 for i, heatmap in enumerate(heatmaps):
@@ -175,16 +134,10 @@ for i, heatmap in enumerate(heatmaps):
 
     heatmap_images.append(np.array(heatmap))
 
-
-
-
-
 font = {"family" : "normal",
         "size" : 24}
 
 matplotlib.rc("font", **font)
-
-
 
 for i in range(len(heatmaps)):
     plt.figure()

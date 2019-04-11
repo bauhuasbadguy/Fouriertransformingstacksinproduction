@@ -5,7 +5,7 @@
 import glob
 import numpy as np
 import os
-import cv2
+from PIL import Image
 import matplotlib.pyplot as plt
 import time
 
@@ -68,32 +68,32 @@ for ks in ksrange:
 
     #set where to get the bmps for the fft
     #target = 'H:/HPCcalculations/500nmsquare_delayed_pulse/' + repr(ks) + 'KJ/amplitude' + repr(amp) + '/bmp/xbmps/'
-    target = "I:/bmp_from_paper/" + repr(ks) + "KJ/shrunk/"
+    target = "./bmp_from_paper/" + repr(ks) + "KJ/shrunk/"
     
     #set where to save the results of the fft
-    output = "I:/bmp_from_paper/" + repr(ks) + "KJ/shrunk/python_3D_fft_on_x/"
+    output = "./bmp_from_paper/" + repr(ks) + "KJ/shrunk/python_3D_fft_on_x/"
     #output = 'H:/HPCcalculations/500nmsquare_delayed_pulse/' + repr(ks) + 'KJ/amplitude' + repr(amp) + '/bmp/python_3D_fft_on_x/'
 
 
-
+    #move the root directory to the target directory
     os.chdir(target)
 
-
+    #check that the output folder, if it doesn't, make it
     if os.path.exists(output) == False:
         os.mkdir(output)
     
-    
+    #load a list of the filenames in the target folder
     filenamelist = glob.glob('*.bmp')
 
 
     #remove the static frames from the filelist
     filenamelist = filenamelist
-    print filenamelist
+    print(filenamelist)
     #load the data in
     mainstack = []
-
+    #cycle through the images and add them to the main stack
     for i, filename in enumerate(filenamelist):
-        out = cv2.imread(target + filenamelist[i])
+        out = Image.open(target + filenamelist[i])
 
 
         red = np.ndarray.tolist(out[:,:,0])
@@ -104,23 +104,16 @@ for ks in ksrange:
         mainstack.append(result)
 
 
-
+    #subtract the base image from each subsequent image in the stack to
+    #remove base images
     base = mainstack[0]
 
     for i, image in enumerate(mainstack):
 
         mainstack[i] = np.subtract(image, base)
 
-        
 
-
-
-
-
-
-
-
-    print 'Starting the fft'
+    print('Starting the fft')
 
     for y in range(0, len(mainstack[0])):
 
@@ -154,7 +147,7 @@ for ks in ksrange:
         save_fft_2D_matrix(column_matrix, savename)
 
 
-    print 'Done'
+    print('Done')
     #print fft_time
 
     #plt.figure()

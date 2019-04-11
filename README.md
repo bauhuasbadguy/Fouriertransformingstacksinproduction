@@ -1,5 +1,5 @@
-Fouriertransformingstacksinproduction
-=====================================
+Fourier transforming omf bmp stacks
+===================================
 
 Fourier transform programs pre-publishing
 
@@ -7,13 +7,6 @@ Basic summary
 =============
 This series of programs produces a series of heat maps showing the frequency of ocillation of the intensities of 
 individual pixels in a stack of .tiff images.
-
-
-Twitter version
-===============
-Codes to do Fourier transforms of .tiff image stacks to find the frequency of oscillation in magnetisation from PEEM 
-data #twitterphysics
-
 
 User guide
 ===========
@@ -42,7 +35,6 @@ your results if the DRM has a hissy fit.
 
 Code structure
 ==============
-
 The code starts by asking the user for the number of images to be transformed, the suffix of those images (assuming 
 diamond naming convention) and the name of the .txt file containing the timestamps on all the individual images.
 It then transforming the images into a huge 3D matrix and then fourier transforming individual z-slices one row at a 
@@ -65,27 +57,12 @@ matrix representing a heat map of the defined frequency range across the image.
 These 2D matracies are then saved as .txt files in case the code crashes in the middle of producing figures and the 
 heat maps are output as figures.
 
+Todo
+====
+- make the code clearer and easier to use
+- dockerise the python image for portability
+- add a GUI tool
 
-File list
-=========
-This repository contains a number of files with different purposes, for this reason here is a list to help you use the
-files effectively (Listed by date of upload):-
-
-Readme.md => That's this file fool
-
-Frequencyfinderrunner.m => The vanilla version of the program, reads raw data and the UI is a total mess
-got_to.txt => An example of a got_to file, a bookkeeping device for the code
-
-testimestampsb.txt => An example of a set of timestamps, can be used with the testpieces produced by the testpiece
-producing file included here
-
-normalizationprogram.m => Normalises a stack of .tiff images so that their values run between 1 and -1
-
-frequencyfinderfornormalizeddata.m => Performes the fourier analysis on data normalized by normalisationprogram.m
-
-teststackdfrequencydevice.m => Produces a set of .tif images which you can use to test the fourier transformation 
-programs
-
-programforaccesingtheproducedheatmapsforwhenmatlabDRMfucksus => Uses the .txt files produced by the fourier
-transformation programs to reproduce the heat maps if something happens to matlab after it produces all the relevant 
-figures
+Assumptions
+===========
+The python code was written assuming the inputted bmp files are .omf results encoded such that red is positive and blue is negative
