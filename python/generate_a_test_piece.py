@@ -4,6 +4,24 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import math
 
+def write_to_region(base, region_value, region_dims):
+
+    region_dims[:] = [int(x) for x in region_dims]
+
+    area = np.zeros((region_dims[1]-region_dims[0], region_dims[3]-region_dims[2]))
+    area[area == 0] = abs(region_value)
+
+    if region_value < 0:
+        base_image[region_dims[0]:region_dims[1], region_dims[2]:region_dims[3], 0] = area
+    elif region_value > 0:
+        base_image[region_dims[0]:region_dims[1], region_dims[2]:region_dims[3], 2] = area
+    
+    
+    return base_image
+###################################
+### End of function definitions ###
+###################################
+
 time_step = 0.1
 frames = 500
 
@@ -36,41 +54,40 @@ for i in range(frames):
     r2.append(region2)
     r3.append(region3)
 
-    #build the test piece image
-    if region0 < 0:
-        np.put(base_image, [0:base_width/2], [0:base_height/2], [0], abs(region0))
-    elif region0 > 0:
-        np.put(base_image, [0:base_width/2], [0:base_height/2], [0], abs(region0))
-    '''
-    if region1 < 0:
+    #write to region 0 (top left)
+    base_image = write_to_region(base_image, region0, [0, base_width/2, 0, base_height/2])
 
-        base_image[0:base_width/2, base_height/2:base_height, 0] = abs(region1)
-    elif region1 > 0:
-        base_image[0:base_width/2, base_height/2:base_height, 2] = abs(region1)
+    #write to region 1 (bottom left)
+    base_image = write_to_region(base_image, region1, [0, base_width/2, base_height/2, base_height])
 
-    if region2 < 0:
-        base_image[base_width/2:base_width, 0:base_height/2, 0] = abs(region2)
-    elif region2 > 0:
-        base_image[base_width/2:base_width, 0:base_height/2, 2] = abs(region2)
+    #write to region 2 (top right)
+    base_image = write_to_region(base_image, region2, [base_width/2, base_width, 0, base_height/2])
 
-    if region3 < 0:
-        base_image[base_width/2:base_width, base_height/2:base_height, 0] = abs(region3)
+    #write to region 3 (top right)
+    base_image = write_to_region(base_image, region3, [base_width/2, base_width, base_height/2, base_height])
 
-    elif region3 > 0:
-        base_image[base_width/2:base_width, base_height/2:base_height, 2] = abs(region3)
-    '''
     base_image = base_image * 255
 
     base_image = base_image.astype('uint8')
 
-    print(base_image)
-    print(np.shape(base_image))
-    print(np.max(base_image))
-    print(np.min(base_image))
+    #print(base_image)
+    #print(np.shape(base_image))
+    #print(np.max(base_image))
+    #print(np.min(base_image))
 
     im = Image.fromarray(base_image)
 
-    im.save(output_folder + str(i) + '.png', 'PNG')
+    target_length = 5
+
+    num_len = len(str(i))
+
+    if num_len < target_length:
+
+        out_string = '0'* (target_length - num_len)
+        out_string += str(i)
+
+
+    im.save(output_folder + out_string + '.bmp', 'BMP')
 
 plt.figure()
 plt.plot(ts, r0, 'b-', label='r0')
