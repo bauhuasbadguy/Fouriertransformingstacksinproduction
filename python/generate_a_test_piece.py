@@ -25,8 +25,8 @@ def write_to_region(base, region_value, region_dims):
 time_step = 0.1
 frames = 500
 
-base_width = 500
-base_height = 500
+base_width = 100
+base_height = 100
 
 output_folder = './test_piece/'
 
@@ -69,11 +69,6 @@ for i in range(frames):
     base_image = base_image * 255
 
     base_image = base_image.astype('uint8')
-
-    #print(base_image)
-    #print(np.shape(base_image))
-    #print(np.max(base_image))
-    #print(np.min(base_image))
 
     im = Image.fromarray(base_image)
 

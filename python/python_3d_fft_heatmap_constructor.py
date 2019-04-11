@@ -11,10 +11,10 @@ import matplotlib.pyplot as plt
 import glob
 import math
 
-def load_ffted_data(target_dir, filename):
+def load_ffted_data(filename):
 
     #read in a file
-    with open(target_dir + filename, 'r') as f
+    with open(filename, 'r') as f:
 
         readstring = f.read()
 
@@ -47,39 +47,41 @@ def load_ffted_data(target_dir, filename):
 ### End of function definitions ###
 ###################################
 
-timestep = 100e-12
-#0.025e-9
+#set the timestep for the video
+timestep = 0.1
 
-#0.01
-#0.025e-9
-size = 500
-#500
+#set the size of the object
+size = 100
+
+#set the precision of the fft
 n = 512
 
+#where to find the output files
+target_dir = './output/'
 
-#dev pre-fft reading function
+#load in the filenames
+filenames = glob.glob(target_dir + '*.txt')
 
-target_dir = 'F:/Python_programs/processing_XMCD_data/December_2014_video_1_analysis/stack_fft_result/'
+#sort of filenames alphabetically
+filenames.sort()
 
-os.chdir(target_dir)
-
-filenames = glob.glob('*.txt')
+print(filenames)
 
 filename = filenames[0]
 
-result = load_ffted_data(target_dir, filename)
+result = load_ffted_data(filename)
 
 
 freqs = []
 
-for i in range(n/2):
+for i in range(int(n/2)):
         freqs.append(((1/timestep)/n) * i)
 
 
 #Set the frequencies you want to centre on
-desired_freqs = [80e6, 160e6, 320e6]
+desired_freqs = [(2* math.pi)/5, (2* math.pi)/7, (2* math.pi)/13, (2* math.pi)/17]
 
-window = 1e7
+window = math.pi/20
 
 index_windows = []
 heatmaps = []
@@ -104,7 +106,7 @@ for y, filename in enumerate(filenames):
     if y%100 == 0:
         print(y)
 
-    result = load_ffted_data(target_dir, filename)
+    result = load_ffted_data(filename)
 
     for heatmap_no, heatmap in enumerate(heatmaps):
 
@@ -142,8 +144,7 @@ matplotlib.rc("font", **font)
 for i in range(len(heatmaps)):
     plt.figure()
     plt.imshow(heatmap_images[i])
-    #plt.title(repr(desired_freqs[i] * 1e-8) + "GHz")
+    plt.title(repr(desired_freqs[i]) + "Hz")
     plt.axis("off")
     cb1 = plt.colorbar()
-    cb1.set_label(r'Am$^{2}$')
 plt.show()
